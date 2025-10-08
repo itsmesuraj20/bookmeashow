@@ -5,13 +5,13 @@ import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 
 export default function Home() {
-  return (
-    <main className="min-h-screen">
-      <Header />
-      <HeroSection />
-      <NowShowing />
-      <ComingSoon />
-      <Footer />
-    </main>
-  );
+    return (
+        <main className="min-h-screen">
+            <Header />
+            <HeroSection />
+            <NowShowing />
+            <ComingSoon />
+            <Footer />
+        </main>
+    );
 }
