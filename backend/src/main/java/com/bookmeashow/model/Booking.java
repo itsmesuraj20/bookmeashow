@@ -16,8 +16,8 @@ import java.util.Set;
 
 @Entity
 @Table(name = "bookings", indexes = {
-    @Index(name = "idx_user_booking", columnList = "user_id, createdAt"),
-    @Index(name = "idx_booking_ref", columnList = "bookingReference", unique = true)
+        @Index(name = "idx_user_booking", columnList = "user_id, createdAt"),
+        @Index(name = "idx_booking_ref", columnList = "bookingReference", unique = true)
 })
 @EntityListeners(AuditingEntityListener.class)
 @Data

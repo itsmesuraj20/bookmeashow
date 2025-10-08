@@ -15,8 +15,8 @@ import java.util.Set;
 
 @Entity
 @Table(name = "theaters", indexes = {
-    @Index(name = "idx_city", columnList = "city"),
-    @Index(name = "idx_name", columnList = "name")
+        @Index(name = "idx_city", columnList = "city"),
+        @Index(name = "idx_name", columnList = "name")
 })
 @EntityListeners(AuditingEntityListener.class)
 @Data

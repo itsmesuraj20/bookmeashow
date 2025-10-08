@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "seats", indexes = {
-    @Index(name = "idx_screen_row_number", columnList = "screen_id, rowNumber, seatNumber", unique = true)
+        @Index(name = "idx_screen_row_number", columnList = "screen_id, rowNumber, seatNumber", unique = true)
 })
 @EntityListeners(AuditingEntityListener.class)
 @Data

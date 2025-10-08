@@ -16,8 +16,8 @@ import java.util.Set;
 
 @Entity
 @Table(name = "shows", indexes = {
-    @Index(name = "idx_movie_show_time", columnList = "movie_id, showTime"),
-    @Index(name = "idx_screen_show_time", columnList = "screen_id, showTime")
+        @Index(name = "idx_movie_show_time", columnList = "movie_id, showTime"),
+        @Index(name = "idx_screen_show_time", columnList = "screen_id, showTime")
 })
 @EntityListeners(AuditingEntityListener.class)
 @Data
