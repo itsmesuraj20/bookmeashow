@@ -12,14 +12,14 @@ import java.util.List;
 
 @Repository
 public interface ShowSeatRepository extends JpaRepository<ShowSeat, Long> {
-    
+
     List<ShowSeat> findByShowId(Long showId);
-    
+
     @Query("SELECT ss FROM ShowSeat ss WHERE ss.show.id = :showId AND ss.seat.id IN :seatIds")
     List<ShowSeat> findByShowIdAndSeatIds(@Param("showId") Long showId, @Param("seatIds") List<Long> seatIds);
-    
+
     @Modifying
     @Query("UPDATE ShowSeat ss SET ss.status = 'AVAILABLE', ss.lockedUntil = NULL, ss.lockedByUserId = NULL " +
-           "WHERE ss.status = 'LOCKED' AND ss.lockedUntil < :currentTime")
+            "WHERE ss.status = 'LOCKED' AND ss.lockedUntil < :currentTime")
     int releaseExpiredLocks(@Param("currentTime") LocalDateTime currentTime);
 }
