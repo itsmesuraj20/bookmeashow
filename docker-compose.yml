@@ -1,5 +1,3 @@
-version: "3.8"
-
 services:
   # PostgreSQL Database
   postgres:
@@ -99,14 +97,15 @@ services:
     networks:
       - bookmeashow-network
 
-  # Backend Service
+  # Backend Service (Development with Hot Reload)
   backend:
     build:
       context: ./backend
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.dev
     container_name: bookmeashow-backend
     ports:
       - "8080:8080"
+      - "5005:5005"  # Debug port
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/bookmeashow
       SPRING_DATASOURCE_USERNAME: bookmeashow_user
@@ -117,6 +116,11 @@ services:
       SPRING_REDIS_PASSWORD: redis123
       SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:29092
       SPRING_ELASTICSEARCH_URIS: http://elasticsearch:9200
+      SPRING_DEVTOOLS_RESTART_ENABLED: "true"
+    volumes:
+      - ./backend/src:/app/src
+      - ./backend/pom.xml:/app/pom.xml
+      - backend_m2:/root/.m2
     depends_on:
       postgres:
         condition: service_healthy
@@ -130,19 +134,27 @@ services:
       - bookmeashow-network
     restart: unless-stopped
 
-  # Frontend Service
+    # Frontend Service (Development with Hot Reload)
   frontend:
     build:
       context: ./frontend
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.dev
     container_name: bookmeashow-frontend
     ports:
       - "3000:3000"
     environment:
-      NEXT_PUBLIC_API_URL: http://localhost:8080/api
-      NEXT_PUBLIC_WS_URL: ws://localhost:8080/ws
-    depends_on:
-      - backend
+      NEXT_PUBLIC_API_URL: http://localhost/api
+      NODE_ENV: development
+      WATCHPACK_POLLING: "true"
+    volumes:
+      - ./frontend/src:/app/src
+      - ./frontend/public:/app/public
+      - ./frontend/package.json:/app/package.json
+      - ./frontend/next.config.js:/app/next.config.js
+      - ./frontend/tailwind.config.js:/app/tailwind.config.js
+      - ./frontend/tsconfig.json:/app/tsconfig.json
+      - /app/node_modules
+      - /app/.next
     networks:
       - bookmeashow-network
     restart: unless-stopped
@@ -194,6 +206,7 @@ volumes:
   elasticsearch_data:
   prometheus_data:
   grafana_data:
+  backend_m2:  # Maven cache for faster rebuilds
 
 networks:
   bookmeashow-network:
