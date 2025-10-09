@@ -105,7 +105,7 @@ services:
     container_name: bookmeashow-backend
     ports:
       - "8080:8080"
-      - "5005:5005"  # Debug port
+      - "5005:5005" # Debug port
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/bookmeashow
       SPRING_DATASOURCE_USERNAME: bookmeashow_user
@@ -206,7 +206,7 @@ volumes:
   elasticsearch_data:
   prometheus_data:
   grafana_data:
-  backend_m2:  # Maven cache for faster rebuilds
+  backend_m2: # Maven cache for faster rebuilds
 
 networks:
   bookmeashow-network:
